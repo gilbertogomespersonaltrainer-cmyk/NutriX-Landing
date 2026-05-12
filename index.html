@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NutriX — Gestão para Consultório</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --green: #22c55e; --green-dark: #16a34a; --green-deeper: #052e16;
+    --black: #080808; --card: #0f0f0f; --border: #1a1a1a;
+    --text: #fff; --muted: #555; --subtle: #222;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--black); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 5%; height: 68px; display: flex; align-items: center; justify-content: space-between; background: rgba(8,8,8,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'Outfit', sans-serif; font-size: 24px; letter-spacing: -1px; display: flex; align-items: baseline; }
+  .nav-logo-n { font-weight: 300; color: #fff; }
+  .nav-logo-x { font-weight: 900; color: var(--green); }
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-link { font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-link:hover { color: #fff; }
+  .nav-cta { background: var(--green); color: var(--green-deeper); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; padding: 9px 22px; border-radius: 8px; border: none; cursor: pointer; transition: all 0.2s; }
+  .nav-cta:hover { background: #4ade80; transform: translateY(-1px); }
+
+  /* HERO */
+  @keyframes fade-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); } 50% { box-shadow: 0 0 0 6px rgba(34,197,94,0); } }
+
+  .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 100px 5% 80px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 900px; height: 900px; background: radial-gradient(circle, rgba(34,197,94,0.07) 0%, transparent 65%); pointer-events: none; }
+
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); border-radius: 100px; padding: 6px 16px; font-size: 12px; font-weight: 600; color: var(--green); margin-bottom: 32px; letter-spacing: 0.5px; animation: fade-up 0.6s ease forwards; }
+  .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+
+  .hero-title { font-family: 'Outfit', sans-serif; font-size: clamp(44px, 6.5vw, 84px); font-weight: 900; letter-spacing: -3px; line-height: 1.0; margin-bottom: 28px; animation: fade-up 0.6s ease 0.1s both; }
+  .hero-title .accent { color: var(--green); }
+  .hero-title .light { font-weight: 300; color: #3a3a3a; display: block; font-size: clamp(28px, 4vw, 52px); margin-top: 6px; }
+
+  .hero-sub { font-size: clamp(15px, 2vw, 18px); color: #666; max-width: 560px; margin: 0 auto 32px; font-weight: 400; line-height: 1.7; animation: fade-up 0.6s ease 0.2s both; }
+  .hero-sub strong { color: #aaa; font-weight: 500; }
+
+  .hero-compare { display: flex; align-items: center; gap: 16px; justify-content: center; margin-bottom: 40px; animation: fade-up 0.6s ease 0.25s both; flex-wrap: wrap; }
+  .compare-pill { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 100px; font-size: 12px; font-weight: 600; }
+  .compare-them { background: #1a1a1a; color: #444; border: 1px solid #222; }
+  .compare-us { background: rgba(34,197,94,0.1); color: var(--green); border: 1px solid rgba(34,197,94,0.25); }
+
+  .hero-actions { display: flex; align-items: center; gap: 16px; justify-content: center; margin-bottom: 64px; animation: fade-up 0.6s ease 0.3s both; flex-wrap: wrap; }
+  .btn-primary { background: var(--green); color: var(--green-deeper); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 700; padding: 14px 32px; border-radius: 10px; border: none; cursor: pointer; transition: all 0.2s; }
+  .btn-primary:hover { background: #4ade80; transform: translateY(-2px); box-shadow: 0 16px 40px rgba(34,197,94,0.25); }
+  .btn-secondary { background: transparent; color: #666; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; padding: 14px 24px; border-radius: 10px; border: 1px solid var(--border); cursor: pointer; transition: all 0.2s; }
+  .btn-secondary:hover { color: #fff; border-color: #333; }
+
+  .hero-stats { display: flex; align-items: center; gap: 40px; justify-content: center; animation: fade-up 0.6s ease 0.4s both; flex-wrap: wrap; }
+  .hero-stat { text-align: center; }
+  .hero-stat-value { font-family: 'Outfit', sans-serif; font-size: 28px; font-weight: 800; color: var(--green); letter-spacing: -1px; }
+  .hero-stat-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .hero-stat-divider { width: 1px; height: 40px; background: var(--border); }
+
+  /* DORES */
+  .pain-section { padding: 80px 5%; background: #0a0a0a; }
+  .pain-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+  .pain-title { font-family: 'Outfit', sans-serif; font-size: clamp(28px, 4vw, 44px); font-weight: 800; letter-spacing: -1.5px; margin-bottom: 16px; }
+  .pain-title span { color: var(--green); }
+  .pain-sub { font-size: 15px; color: var(--muted); margin-bottom: 48px; max-width: 520px; margin-left: auto; margin-right: auto; }
+  .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .pain-card { background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 14px; padding: 24px; text-align: left; position: relative; overflow: hidden; }
+  .pain-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #ef4444, transparent); }
+  .pain-icon { font-size: 24px; margin-bottom: 12px; }
+  .pain-text { font-size: 13px; color: #666; line-height: 1.7; font-style: italic; }
+  .pain-text strong { color: #aaa; font-style: normal; }
+
+  /* COMPARATIVO */
+  .versus-section { padding: 100px 5%; max-width: 1000px; margin: 0 auto; }
+  .section-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--green); margin-bottom: 12px; text-align: center; }
+  .section-heading { font-family: 'Outfit', sans-serif; font-size: clamp(32px, 4vw, 52px); font-weight: 800; letter-spacing: -2px; text-align: center; margin-bottom: 16px; line-height: 1.1; }
+  .section-heading span { color: var(--green); }
+  .section-desc { font-size: 16px; color: var(--muted); text-align: center; max-width: 500px; margin: 0 auto 56px; line-height: 1.7; }
+
+  .versus-table { width: 100%; border-collapse: collapse; }
+  .versus-table thead tr th { padding: 16px 20px; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; text-align: center; }
+  .versus-table thead tr th:first-child { text-align: left; color: var(--muted); }
+  .versus-table thead tr th.col-them { color: #333; }
+  .versus-table thead tr th.col-nutrix { color: var(--green); background: rgba(34,197,94,0.06); border-radius: 10px 10px 0 0; border: 1px solid rgba(34,197,94,0.15); border-bottom: none; }
+  .versus-table tbody tr { border-bottom: 1px solid #111; }
+  .versus-table tbody tr:last-child { border-bottom: none; }
+  .versus-table tbody tr td { padding: 14px 20px; font-size: 13px; }
+  .versus-table tbody tr td:first-child { color: #888; font-weight: 500; }
+  .versus-table tbody tr td:not(:first-child) { text-align: center; }
+  .versus-table tbody tr td.col-nutrix { background: rgba(34,197,94,0.04); border-left: 1px solid rgba(34,197,94,0.1); border-right: 1px solid rgba(34,197,94,0.1); }
+  .versus-table tfoot tr td.col-nutrix { background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.15); border-top: none; border-radius: 0 0 10px 10px; padding: 12px 20px; }
+  .check { color: var(--green); font-size: 16px; font-weight: 700; }
+  .cross { color: #2a2a2a; font-size: 16px; }
+  .partial { color: #f59e0b; font-size: 11px; font-weight: 600; }
+  .versus-note { margin-top: 24px; padding: 16px 20px; background: rgba(34,197,94,0.05); border: 1px solid rgba(34,197,94,0.15); border-radius: 10px; font-size: 13px; color: #666; line-height: 1.7; text-align: center; }
+  .versus-note strong { color: var(--green); }
+
+  /* FUNCIONALIDADES */
+  .features { padding: 100px 5%; max-width: 1200px; margin: 0 auto; }
+  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .feature-card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 28px; transition: all 0.3s; position: relative; overflow: hidden; }
+  .feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--green), transparent); opacity: 0; transition: opacity 0.3s; }
+  .feature-card:hover { border-color: rgba(34,197,94,0.2); transform: translateY(-4px); }
+  .feature-card:hover::before { opacity: 1; }
+  .feature-icon { width: 44px; height: 44px; background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 18px; }
+  .feature-title { font-family: 'Outfit', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.3px; }
+  .feature-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+  .feature-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); border-radius: 20px; padding: 3px 10px; font-size: 10px; font-weight: 700; color: var(--green); margin-top: 12px; letter-spacing: 0.5px; }
+
+  /* WHATSAPP */
+  .wa-section { padding: 100px 5%; background: linear-gradient(180deg, var(--black) 0%, #0a0f0a 50%, var(--black) 100%); }
+  .wa-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .wa-messages { display: flex; flex-direction: column; gap: 12px; }
+  .wa-bubble-wrap { display: flex; flex-direction: column; gap: 4px; }
+  .wa-auto-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.15); border-radius: 6px; padding: 2px 8px; font-size: 10px; font-weight: 600; color: var(--green); margin-bottom: 6px; }
+  .wa-bubble { background: #1a2e1a; border: 1px solid rgba(34,197,94,0.15); border-radius: 12px 12px 12px 4px; padding: 14px 18px; font-size: 13px; color: #ccc; line-height: 1.6; max-width: 320px; }
+  .wa-bubble strong { color: var(--green); font-weight: 600; }
+  .wa-bubble-time { font-size: 10px; color: var(--muted); margin-top: 4px; padding-left: 4px; }
+
+  /* PRECOS */
+  .pricing { padding: 100px 5%; max-width: 1060px; margin: 0 auto; }
+  .pricing-toggle { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 52px; }
+  .toggle-label { font-size: 13px; font-weight: 500; color: var(--muted); }
+  .toggle-label.active { color: #fff; }
+  .toggle-wrap { width: 48px; height: 26px; background: var(--green); border-radius: 100px; cursor: pointer; position: relative; transition: background 0.2s; }
+  .toggle-circle { position: absolute; top: 3px; right: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform 0.2s; }
+  .toggle-discount { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 700; color: var(--green); }
+
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; }
+  .pricing-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 32px; position: relative; transition: all 0.3s; }
+  .pricing-card:hover { transform: translateY(-4px); }
+  .pricing-card.featured { background: linear-gradient(135deg, #0d1f0d, #0f0f0f); border-color: rgba(34,197,94,0.35); box-shadow: 0 0 60px rgba(34,197,94,0.08); }
+  .pricing-popular { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--green); color: var(--green-deeper); font-size: 11px; font-weight: 700; padding: 4px 18px; border-radius: 20px; white-space: nowrap; letter-spacing: 0.5px; }
+
+  .pricing-plan-name { font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -0.5px; margin-bottom: 4px; }
+  .pricing-plan-desc { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+
+  .pricing-price { font-family: 'Outfit', sans-serif; font-size: 52px; font-weight: 900; letter-spacing: -2px; color: #fff; line-height: 1; margin-bottom: 4px; }
+  .pricing-price sup { font-size: 20px; font-weight: 600; letter-spacing: 0; vertical-align: super; }
+  .pricing-price span { font-size: 16px; font-weight: 400; color: var(--muted); letter-spacing: 0; }
+  .pricing-period { font-size: 12px; color: var(--muted); margin-bottom: 24px; }
+
+  .pricing-limits { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+  .pricing-limit-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+  .pricing-limit-label { font-size: 10px; color: #444; font-weight: 500; margin-bottom: 3px; letter-spacing: 0.5px; }
+  .pricing-limit-value { font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 700; color: var(--green); letter-spacing: -0.5px; }
+
+  .pricing-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
+
+  .pricing-section-label { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #333; margin-bottom: 12px; }
+  .pricing-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+  .pricing-feature { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: #888; line-height: 1.4; }
+  .pricing-check { color: var(--green); font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+  .pricing-x { color: #222; font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+
+  .pricing-btn { width: 100%; padding: 13px; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; border: none; transition: all 0.2s; }
+  .pricing-btn-green { background: var(--green); color: var(--green-deeper); }
+  .pricing-btn-green:hover { background: #4ade80; }
+  .pricing-btn-outline { background: transparent; color: #666; border: 1px solid var(--border); }
+  .pricing-btn-outline:hover { color: #fff; border-color: #333; }
+
+  .pricing-note { text-align: center; margin-top: 28px; font-size: 12px; color: #333; }
+  .pricing-note strong { color: #555; }
+
+  /* FAQ */
+  .faq-section { padding: 100px 5%; max-width: 700px; margin: 0 auto; }
+  .faq-list { display: flex; flex-direction: column; gap: 12px; }
+  .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .faq-question { padding: 18px 22px; font-size: 14px; font-weight: 600; color: #ccc; cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
+  .faq-icon { color: var(--green); font-size: 18px; flex-shrink: 0; }
+  .faq-answer { padding: 0 22px 18px; font-size: 13px; color: #555; line-height: 1.7; }
+
+  /* DEPOIMENTOS */
+  .testimonials { padding: 100px 5%; max-width: 1000px; margin: 0 auto; }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .testimonial-card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 28px; }
+  .testimonial-stars { color: var(--green); font-size: 14px; margin-bottom: 16px; letter-spacing: 2px; }
+  .testimonial-text { font-size: 14px; color: #888; line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+  .testimonial-author { display: flex; align-items: center; gap: 12px; }
+  .testimonial-avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 700; color: var(--green-deeper); background: linear-gradient(135deg, var(--green), var(--green-dark)); flex-shrink: 0; }
+  .testimonial-name { font-size: 13px; font-weight: 600; color: #fff; }
+  .testimonial-role { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+  /* CTA */
+  .cta-section { padding: 100px 5%; text-align: center; position: relative; overflow: hidden; }
+  .cta-section::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 700px; height: 700px; background: radial-gradient(circle, rgba(34,197,94,0.06) 0%, transparent 65%); pointer-events: none; }
+  .cta-inner { max-width: 620px; margin: 0 auto; position: relative; }
+  .cta-title { font-family: 'Outfit', sans-serif; font-size: clamp(36px, 5vw, 64px); font-weight: 900; letter-spacing: -2.5px; line-height: 1.05; margin-bottom: 20px; }
+  .cta-title span { color: var(--green); }
+  .cta-desc { font-size: 16px; color: var(--muted); margin-bottom: 40px; line-height: 1.7; }
+  .cta-note { font-size: 12px; color: #333; margin-top: 16px; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 40px 5%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .footer-logo { font-family: 'Outfit', sans-serif; font-size: 20px; letter-spacing: -0.5px; }
+  .footer-logo-n { font-weight: 300; color: #fff; }
+  .footer-logo-x { font-weight: 900; color: var(--green); }
+  .footer-tagline { font-size: 11px; color: #333; margin-top: 2px; letter-spacing: 1px; text-transform: uppercase; }
+  .footer-copy { font-size: 12px; color: #333; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-link { font-size: 12px; color: #333; text-decoration: none; transition: color 0.2s; }
+  .footer-link:hover { color: #666; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div>
+    <div class="nav-logo"><span class="nav-logo-n">Nutri</span><span class="nav-logo-x">X</span></div>
+    <div class="footer-tagline" style="font-size:9px;margin-top:1px">Gestão para Consultório</div>
+  </div>
+  <div class="nav-links">
+    <a href="#diferenciais" class="nav-link">Diferenciais</a>
+    <a href="#funcionalidades" class="nav-link">Funcionalidades</a>
+    <a href="#precos" class="nav-link">Planos</a>
+    <a href="#faq" class="nav-link">FAQ</a>
+  </div>
+  <button class="nav-cta">Começar grátis</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge"><div class="badge-dot"></div>O CRM que faltava para nutricionistas</div>
+  <h1 class="hero-title">
+    Seu consultório<br>
+    <span class="accent">gerido de verdade.</span>
+    <span class="light">Sem planilha. Sem improviso.</span>
+  </h1>
+  <p class="hero-sub">Dietbox e WebDiet cuidam da dieta. O <strong>NutriX</strong> cuida do seu <strong>negócio</strong>. Financeiro completo, follow-up automático e WhatsApp integrado — tudo que falta nos outros softwares.</p>
+  <div class="hero-compare">
+    <div class="compare-pill compare-them">❌ Outros: foco em plano alimentar</div>
+    <div style="color:#333;font-size:16px">→</div>
+    <div class="compare-pill compare-us">✓ NutriX: foco no seu negócio</div>
+  </div>
+  <div class="hero-actions">
+    <button class="btn-primary">Começar grátis por 14 dias</button>
+    <button class="btn-secondary">Ver planos →</button>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-value">+500</div><div class="hero-stat-label">Nutricionistas</div></div>
+    <div class="hero-stat-divider"></div>
+    <div class="hero-stat"><div class="hero-stat-value">4.9★</div><div class="hero-stat-label">Avaliação média</div></div>
+    <div class="hero-stat-divider"></div>
+    <div class="hero-stat"><div class="hero-stat-value">Zero</div><div class="hero-stat-label">Planilhas</div></div>
+  </div>
+</section>
+
+<!-- DORES -->
+<section class="pain-section">
+  <div class="pain-inner">
+    <h2 class="pain-title">Você já passou por <span>alguma dessas</span>?</h2>
+    <p class="pain-sub">São as dores que nenhum software do mercado resolve direito — e que o NutriX resolve de vez.</p>
+    <div class="pain-grid">
+      <div class="pain-card"><div class="pain-icon">😤</div><div class="pain-text"><strong>"Paciente faltou de novo</strong> e eu só fiquei sabendo quando a agenda ficou vazia."</div></div>
+      <div class="pain-card"><div class="pain-icon">📊</div><div class="pain-text"><strong>"Nunca sei exatamente quanto entrou no mês,</strong> quem pagou e quem ainda tá devendo."</div></div>
+      <div class="pain-card"><div class="pain-icon">👻</div><div class="pain-text"><strong>"Tenho pacientes que sumiram</strong> e não tenho tempo de ir atrás um por um."</div></div>
+      <div class="pain-card"><div class="pain-icon">💬</div><div class="pain-text"><strong>"Fico lembrando consulta no WhatsApp</strong> manualmente pra cada paciente todo dia."</div></div>
+      <div class="pain-card"><div class="pain-icon">🗂️</div><div class="pain-text"><strong>"Meu controle financeiro ainda é uma planilha</strong> do Excel que atualizo quando lembro."</div></div>
+      <div class="pain-card"><div class="pain-icon">💸</div><div class="pain-text"><strong>"Vendo planos parcelados</strong> mas não consigo acompanhar quais parcelas estão em aberto."</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARATIVO -->
+<section class="versus-section" id="diferenciais">
+  <div class="section-eyebrow">Comparativo</div>
+  <h2 class="section-heading">NutriX vs <span>os outros</span></h2>
+  <p class="section-desc">Os concorrentes focam em planos alimentares. O NutriX foca no que faz seu consultório crescer.</p>
+  <table class="versus-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th class="col-them">Dietbox / WebDiet</th>
+        <th class="col-nutrix">NutriX</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Agendamentos</td><td><span class="check">✓</span></td><td class="col-nutrix"><span class="check">✓</span></td></tr>
+      <tr><td>Gestão de pacientes</td><td><span class="check">✓</span></td><td class="col-nutrix"><span class="check">✓</span></td></tr>
+      <tr><td>Pipeline Kanban de pacientes</td><td><span class="cross">✕</span></td><td class="col-nutrix"><span class="check">✓</span></td></tr>
+      <tr><td>Controle financeiro completo</td><td><span class="partial">Parcial</span></td><td class="col-nutrix"><span class="check">✓</span></td></tr>
+      <tr><td>Tipos de serviço (avulsa, planos, grupos)</td><td><span class="cross">✕</span></td><td class="col-nutrix"><span class="check">✓</span></td></tr>
+      <tr><td>Parcelamento com controle de parcelas</td><td><span class="cross">✕</span></td><td class="col-nutrix"><span class="check">✓</span></td></tr>
+      <tr><td>Relatório de inadimplentes</td><td><span class="cross">✕</span></td><td class="col-nutrix"><span class="check">✓</span></td></tr>
+      <tr><td>Lista de inativos para follow-up</td><td><span class="cross">✕</span></td><td class="col-nutrix"><span class="check">✓</span></td></tr>
+      <tr><td>Automações WhatsApp</td><td><span class="cross">✕</span></td><td class="col-nutrix"><span class="check">✓</span></td></tr>
+      <tr><td>Lembrete de consulta por WhatsApp</td><td><span class="partial">Só e-mail</span></td><td class="col-nutrix"><span class="check">✓ WhatsApp</span></td></tr>
+      <tr><td>Plano alimentar e cálculo nutricional</td><td><span class="check">✓</span></td><td class="col-nutrix" style="font-size:11px;color:#444">Use Dietbox</td></tr>
+    </tbody>
+    <tfoot><tr><td></td><td></td><td class="col-nutrix"></td></tr></tfoot>
+  </table>
+  <div class="versus-note">💡 <strong>Dica:</strong> NutriX e Dietbox se complementam. Use o Dietbox para prescrição nutricional e o NutriX para gerir seu negócio.</div>
+</section>
+
+<!-- FUNCIONALIDADES -->
+<section class="features" id="funcionalidades">
+  <div class="section-eyebrow">Funcionalidades</div>
+  <h2 class="section-heading">Tudo que você precisa.<br><span>Nada que você não usa.</span></h2>
+  <p class="section-desc" style="margin-bottom:52px">Sem recursos de plano alimentar. Só o que faz seu negócio crescer.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">📋</div>
+      <div class="feature-title">Pipeline Kanban</div>
+      <div class="feature-desc">Visualize seus pacientes em colunas: lead, ativo, inativo, follow-up. Arraste e organize o funil do seu consultório de forma visual e intuitiva.</div>
+      <div class="feature-badge">✦ Exclusivo NutriX</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📅</div>
+      <div class="feature-title">Agendamentos inteligentes</div>
+      <div class="feature-desc">Calendário completo com visualização mensal e semanal. Status de cada consulta, histórico completo e confirmação automática via WhatsApp.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💰</div>
+      <div class="feature-title">Financeiro avançado</div>
+      <div class="feature-desc">Consultas avulsas, planos trimestrais, semestrais, anuais e grupos. Parcelamento com controle de parcelas, inadimplentes e relatório em PDF.</div>
+      <div class="feature-badge">✦ Exclusivo NutriX</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔔</div>
+      <div class="feature-title">Follow-up de inativos</div>
+      <div class="feature-desc">Lista automática ordenada por tempo de inatividade. Envie mensagem WhatsApp com um clique e recupere pacientes que sumiram sem esforço.</div>
+      <div class="feature-badge">✦ Exclusivo NutriX</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📱</div>
+      <div class="feature-title">Automações WhatsApp</div>
+      <div class="feature-desc">Lembretes de consulta, confirmações e follow-ups disparados automaticamente. Conecte seu número em menos de 1 minuto escaneando um QR Code.</div>
+      <div class="feature-badge">✦ Exclusivo NutriX</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <div class="feature-title">Relatórios avançados</div>
+      <div class="feature-desc">Receita por tipo de serviço, planos ativos, inadimplentes e desempenho mensal. Exporte tudo em PDF para ter controle total do negócio.</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHATSAPP -->
+<section class="wa-section">
+  <div class="wa-inner">
+    <div>
+      <div class="section-eyebrow">Exclusivo NutriX</div>
+      <h2 class="section-heading" style="text-align:left;font-size:clamp(28px,3.5vw,44px)">Nenhum outro software faz <span>isso.</span></h2>
+      <p style="font-size:14px;color:var(--muted);margin:16px 0 32px;line-height:1.7">Enquanto os concorrentes mandam lembretes por e-mail que ninguém abre, o NutriX manda direto no WhatsApp — onde o paciente realmente está.</p>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;align-items:flex-start;gap:12px"><div style="width:28px;height:28px;border-radius:8px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">✓</div><div><div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:2px">Lembrete 24h antes — automático</div><div style="font-size:12px;color:var(--muted)">Paciente recebe no WhatsApp sem você fazer nada</div></div></div>
+        <div style="display:flex;align-items:flex-start;gap:12px"><div style="width:28px;height:28px;border-radius:8px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">✓</div><div><div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:2px">Confirmação instantânea ao agendar</div><div style="font-size:12px;color:var(--muted)">Paciente já recebe a confirmação no ato do agendamento</div></div></div>
+        <div style="display:flex;align-items:flex-start;gap:12px"><div style="width:28px;height:28px;border-radius:8px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">✓</div><div><div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:2px">Follow-up de inativos com 1 clique</div><div style="font-size:12px;color:var(--muted)">Mande mensagem personalizada para quem sumiu há meses</div></div></div>
+      </div>
+    </div>
+    <div class="wa-messages">
+      <div class="wa-bubble-wrap">
+        <div class="wa-auto-badge">⚡ Automático — Confirmação</div>
+        <div class="wa-bubble">Olá <strong>Maria</strong>! Sua consulta com <strong>Dra. Ana Silva</strong> está confirmada para <strong>segunda, 05/05 às 09:00</strong>. Te esperamos!</div>
+        <div class="wa-bubble-time">Enviado automaticamente · agora</div>
+      </div>
+      <div class="wa-bubble-wrap">
+        <div class="wa-auto-badge">⚡ Automático — Lembrete 24h</div>
+        <div class="wa-bubble">Olá <strong>Maria</strong>! Lembrando que você tem consulta <strong>amanhã às 09:00</strong> com <strong>Dra. Ana</strong>. Até amanhã!</div>
+        <div class="wa-bubble-time">Enviado automaticamente · ontem</div>
+      </div>
+      <div class="wa-bubble-wrap">
+        <div class="wa-auto-badge">💬 Follow-up — Inativo há 45 dias</div>
+        <div class="wa-bubble">Olá <strong>Maria</strong>! Faz um tempo que não nos vemos. Que tal agendar uma consulta? Estamos aqui para te ajudar! 🌿</div>
+        <div class="wa-bubble-time">1 clique para enviar · hoje</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRECOS -->
+<section class="pricing" id="precos">
+  <div class="section-eyebrow">Planos</div>
+  <h2 class="section-heading">Simples e sem surpresa.</h2>
+  <p class="section-desc" style="margin-bottom:52px">14 dias grátis. Sem cartão de crédito. Cancele quando quiser.</p>
+
+  <div class="pricing-grid">
+
+    <!-- STARTER -->
+    <div class="pricing-card">
+      <div class="pricing-plan-name">Starter</div>
+      <div class="pricing-plan-desc">Ideal para quem está começando</div>
+      <div class="pricing-price"><sup>R$</sup>47<span>/mês</span></div>
+      <div class="pricing-period">ou R$ 470/ano — 2 meses grátis</div>
+      <div class="pricing-limits">
+        <div class="pricing-limit-card">
+          <div class="pricing-limit-label">Pacientes</div>
+          <div class="pricing-limit-value">30</div>
+        </div>
+        <div class="pricing-limit-card">
+          <div class="pricing-limit-label">WhatsApp/mês</div>
+          <div class="pricing-limit-value">∞</div>
+        </div>
+      </div>
+      <div class="pricing-divider"></div>
+      <div class="pricing-section-label">Recursos</div>
+      <div class="pricing-features">
+        <div class="pricing-feature"><span class="pricing-check">✓</span> Até 30 pacientes</div>
+        <div class="pricing-feature"><span class="pricing-check">✓</span> Pipeline Kanban</div>
+        <div class="pricing-feature"><span class="pricing-check">✓</span> Agendamentos ilimitados</div>
+        <div class="pricing-feature"><span class="pricing-check">✓</span> Financeiro básico</div>
+        <div class="pricing-feature"><span class="pricing-x">✕</span> Automações WhatsApp</div>
+        <div class="pricing-feature"><span class="pricing-x">✕</span> Relatórios avançados</div>
+        <div class="pricing-feature"><span class="pricing-x">✕</span> Follow-up de inativos</div>
+      </div>
+      <button class="pricing-btn pricing-btn-outline">Começar grátis</button>
+    </div>
+
+    <!-- PROFESSIONAL -->
+    <div class="pricing-card featured">
+      <div class="pricing-popular">Mais popular</div>
+      <div class="pricing-plan-name">Professional</div>
+      <div class="pricing-plan-desc">Para consultórios em crescimento</div>
+      <div class="pricing-price"><sup>R$</sup>97<span>/mês</span></div>
+      <div class="pricing-period">ou R$ 970/ano — 2 meses grátis</div>
+      <div class="pricing-limits">
+        <div class="pricing-limit-card">
+          <div class="pricing-limit-label">Pacientes</div>
+          <div class="pricing-limit-value">150</div>
+        </div>
+        <div class="pricing-limit-card">
+          <div class="pricing-limit-label">WhatsApp/mês</div>
+          <div class="pricing-limit-value">∞</div>
+        </div>
+      </div>
+      <div class="pricing-divider"></div>
+      <div class="pricing-section-label">Recursos</div>
+      <div class="pricing-features">
+        <div class="pricing-feature"><span class="pricing-check">✓</span> Até 150 pacientes</div>
+        <div class="pricing-feature"><span class="pricing-check">✓</span> Pipeline Kanban</div>
+        <div class="pricing-feature"><span class="pricing-check">✓</span> Agendamentos ilimitados</div>
+        <div class="pricing-feature"><span class="pricing-check">✓</span> Financeiro completo</div>
+        <div class="pricing-feature"><span class="pricing-check">✓</span> Automações WhatsApp</div>
+        <div class="pricing-feature"><span class="pricing-check">✓</span> Relatórios avançados</div>
+        <div class="pricing-feature"><span class="pricing-x">✕</span> Suporte prioritário</div>
+      </div>
+      <button class="pricing-btn pricing-btn-green">Começar grátis por 14 dias</button>
+    </div>
+
+    <!-- PREMIUM -->
+    <div class="pricing-card">
+      <div class="pricing-plan-name">Premium</div>
+      <div class="pricing-plan-desc">Para clínicas com alto volume</div>
+      <div class="pricing-price"><sup>R$</sup>147<span>/mês</span></div>
+      <div class="pricing-period">ou R$ 1.470/ano — 2 meses grátis</div>
+      <div class="pricing-limits">
+        <div class="pricing-limit-card">
+          <div class="pricing-limit-label">Pacientes</div>
+          <div class="pricing-limit-value">∞</div>
+        </div>
+        <div class="pricing-limit-card">
+          <div class="pricing-limit-label">WhatsApp/mês</div>
+          <div class="pricing-limit-value">∞</div>
+        </div>
+      </div>
+      <div class="pricing-divider"></div>
+      <div class="pricing-section-label">Recursos</div>
+      <div class="pricing-features">
+        <div class="pricing-feature"><span class="pricing-check">✓</span> Pacientes ilimitados</div>
+        <div class="pricing-feature"><span class="pricing-check">✓</span> Pipeline Kanban</div>
+        <div class="pricing-feature"><span class="pricing-check">✓</span> Agendamentos ilimitados</div>
+        <div class="pricing-feature"><span class="pricing-check">✓</span> Financeiro completo</div>
+        <div class="pricing-feature"><span class="pricing-check">✓</span> Automações WhatsApp ilimitadas</div>
+        <div class="pricing-feature"><span class="pricing-check">✓</span> Relatórios avançados</div>
+        <div class="pricing-feature"><span class="pricing-check">✓</span> Suporte prioritário</div>
+      </div>
+      <button class="pricing-btn pricing-btn-outline">Começar grátis</button>
+    </div>
+
+  </div>
+  <div class="pricing-note">Todos os planos incluem <strong>14 dias grátis</strong> sem cartão de crédito · Cancele quando quiser · Suporte em português</div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="section-eyebrow">Dúvidas</div>
+  <h2 class="section-heading" style="margin-bottom:40px">Perguntas <span>frequentes</span></h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-question">Preciso cancelar meu software atual para usar o NutriX? <span class="faq-icon">+</span></div>
+      <div class="faq-answer">Não. O NutriX é focado em gestão de negócio, não em planos alimentares. Você pode usar o Dietbox ou WebDiet para prescrição e o NutriX para financeiro, agendamentos e WhatsApp — os dois se complementam.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">Como funciona a integração com o WhatsApp? <span class="faq-icon">+</span></div>
+      <div class="faq-answer">Você conecta seu número escaneando um QR Code diretamente nas configurações do NutriX. Em menos de 1 minuto seu WhatsApp está integrado e o sistema já começa a enviar lembretes automáticos.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">Posso trocar de plano depois? <span class="faq-icon">+</span></div>
+      <div class="faq-answer">Sim, você pode fazer upgrade ou downgrade a qualquer momento. O valor é ajustado proporcionalmente ao período restante.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">Meus dados ficam seguros? <span class="faq-icon">+</span></div>
+      <div class="faq-answer">Sim. O NutriX é multi-tenant com isolamento total de dados. Nenhuma nutricionista acessa os dados de outra. Todos os dados são criptografados e armazenados com segurança.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">Tem contrato de fidelidade? <span class="faq-icon">+</span></div>
+      <div class="faq-answer">Não. O NutriX é mês a mês sem fidelidade. Você pode cancelar quando quiser, sem multa e sem burocracia.</div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="testimonials">
+  <div class="section-eyebrow">Depoimentos</div>
+  <h2 class="section-heading" style="margin-bottom:48px">O que dizem as <span>nutricionistas</span>.</h2>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-text">"Usava o Dietbox para as dietas e não tinha nada para gestão. O NutriX preencheu exatamente esse buraco. Controle financeiro completo e WhatsApp automático — reduziu muito as faltas."</div>
+      <div class="testimonial-author"><div class="testimonial-avatar">AS</div><div><div class="testimonial-name">Dra. Ana Silva</div><div class="testimonial-role">Nutricionista · Recife, PE</div></div></div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-text">"O controle de parcelamento de planos mudou tudo. Antes não sabia quem tinha pago o trimestral. Agora o relatório de inadimplentes aparece automático e eu cobro na hora certa."</div>
+      <div class="testimonial-author"><div class="testimonial-avatar">CM</div><div><div class="testimonial-name">Dra. Carla Mendes</div><div class="testimonial-role">Nutricionista · São Paulo, SP</div></div></div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-text">"A lista de inativos com o botão de WhatsApp é incrível. Em um mês recuperei 8 pacientes que tinham sumido. Esse recurso sozinho já paga a assinatura várias vezes."</div>
+      <div class="testimonial-author"><div class="testimonial-avatar">FR</div><div><div class="testimonial-name">Dra. Fernanda Rocha</div><div class="testimonial-role">Nutricionista · Belo Horizonte, MG</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="section-eyebrow">Comece hoje</div>
+    <h2 class="cta-title">Seu consultório merece mais do que <span>uma planilha.</span></h2>
+    <p class="cta-desc">14 dias grátis, sem cartão de crédito. Configure em menos de 5 minutos e comece a usar hoje mesmo.</p>
+    <button class="btn-primary" style="font-size:16px;padding:16px 40px">Começar grátis agora</button>
+    <div class="cta-note">Sem contrato · Cancele quando quiser · Suporte em português</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo"><span class="footer-logo-n">Nutri</span><span class="footer-logo-x">X</span></div>
+    <div class="footer-tagline">Gestão para Consultório</div>
+  </div>
+  <div class="footer-copy">© 2026 NutriX. Todos os direitos reservados.</div>
+  <div class="footer-links">
+    <a href="#" class="footer-link">Privacidade</a>
+    <a href="#" class="footer-link">Termos</a>
+    <a href="#" class="footer-link">Contato</a>
+  </div>
+</footer>
+
+</body>
+</html>
