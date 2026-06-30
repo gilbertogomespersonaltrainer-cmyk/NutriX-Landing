@@ -195,6 +195,90 @@
   .cta-desc { font-size: 16px; color: var(--muted); margin-bottom: 40px; line-height: 1.7; }
   .cta-note { font-size: 12px; color: #333; margin-top: 16px; }
 
+  /* PREVIEW DE PRODUTO */
+  .preview-section { padding: 80px 5% 100px; text-align: center; overflow: hidden; }
+  .preview-devices { display: flex; align-items: flex-end; justify-content: center; gap: 0; margin-top: 60px; position: relative; }
+
+  /* MacBook */
+  .macbook-wrap { position: relative; z-index: 2; }
+  .macbook { width: min(680px, 85vw); filter: drop-shadow(0 40px 80px rgba(0,0,0,0.8)); }
+  .macbook-lid { background: linear-gradient(160deg, #2a2a2c, #1a1a1c); border-radius: 14px 14px 0 0; padding: 10px 10px 0; border: 1.5px solid #3a3a3c; border-bottom: none; }
+  .macbook-screen-area { background: #080808; border-radius: 6px; overflow: hidden; aspect-ratio: 16/10; border: 1px solid #111; position: relative; }
+  .macbook-base { background: linear-gradient(180deg, #232325, #1a1a1c); height: 22px; border-radius: 0 0 6px 6px; border: 1.5px solid #3a3a3c; border-top: none; display: flex; align-items: center; justify-content: center; }
+  .macbook-notch { width: 100px; height: 10px; background: #111; border-radius: 0 0 8px 8px; }
+  .macbook-foot { background: linear-gradient(180deg, #1a1a1c, #111); height: 6px; border-radius: 0 0 4px 4px; margin: 0 20px; }
+
+  /* App UI inside MacBook */
+  .app-frame { display: flex; width: 100%; height: 100%; font-size: 11px; }
+  .app-sidebar { width: 130px; background: #0a0a0a; border-right: 1px solid #1a1a1a; padding: 12px 0; flex-shrink: 0; display: flex; flex-direction: column; }
+  .app-sidebar-logo { padding: 4px 14px 14px; font-size: 14px; font-weight: 900; font-family: 'Outfit', sans-serif; letter-spacing: -0.5px; }
+  .app-sidebar-logo span { color: var(--green); }
+  .app-nav-item { display: flex; align-items: center; gap: 8px; padding: 7px 14px; font-size: 10.5px; color: #444; cursor: default; border-radius: 0; transition: all 0.2s; }
+  .app-nav-item.active { background: rgba(34,197,94,0.1); color: var(--green); border-right: 2px solid var(--green); }
+  .app-nav-item svg { flex-shrink: 0; }
+  .app-main { flex: 1; background: #080808; overflow: hidden; padding: 14px; }
+  .app-main-title { font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 800; color: #fff; letter-spacing: -0.5px; margin-bottom: 2px; }
+  .app-main-sub { font-size: 9px; color: #333; margin-bottom: 12px; }
+  .app-cards-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 10px; }
+  .app-metric { background: #0f0f0f; border: 1px solid #1a1a1a; border-radius: 8px; padding: 8px; }
+  .app-metric-label { font-size: 8px; color: #333; margin-bottom: 4px; }
+  .app-metric-value { font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+  .app-metric-value.green { color: var(--green); }
+  .app-bottom-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .app-panel { background: #0f0f0f; border: 1px solid #1a1a1a; border-radius: 8px; padding: 10px; }
+  .app-panel-title { font-size: 9px; font-weight: 700; color: #888; margin-bottom: 8px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .app-shortcut { display: flex; align-items: center; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #111; }
+  .app-shortcut:last-child { border-bottom: none; }
+  .app-shortcut-text { font-size: 9px; color: #555; }
+  .app-shortcut-arrow { color: var(--green); font-size: 9px; }
+  .app-consult-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 60px; gap: 4px; }
+  .app-consult-empty-icon { color: #222; font-size: 18px; }
+  .app-consult-empty-text { font-size: 8px; color: #2a2a2a; }
+
+  /* iPhone */
+  .iphone-wrap { position: relative; z-index: 3; margin-left: -30px; margin-bottom: 10px; }
+  .iphone { width: min(175px, 24vw); filter: drop-shadow(0 30px 60px rgba(0,0,0,0.9)); }
+  .iphone-outer { background: linear-gradient(160deg, #2a2a2c, #1a1a1c); border-radius: 36px; padding: 8px; border: 1.5px solid #3a3a3c; }
+  .iphone-screen-area { background: #000; border-radius: 28px; overflow: hidden; aspect-ratio: 9/19.5; position: relative; }
+  .iphone-island { position: absolute; top: 7px; left: 50%; transform: translateX(-50%); width: 54px; height: 10px; background: #000; border-radius: 20px; z-index: 10; border: 1px solid #1a1a1a; }
+  .iphone-app { height: 100%; background: #080808; display: flex; flex-direction: column; overflow: hidden; padding-top: 22px; }
+  .iphone-status { display: flex; justify-content: space-between; padding: 0 10px 4px; font-size: 7px; color: #666; }
+  .iphone-header { padding: 6px 10px; display: flex; align-items: center; justify-content: space-between; }
+  .iphone-logo { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 900; letter-spacing: -0.3px; }
+  .iphone-logo span { color: var(--green); }
+  .iphone-content { padding: 0 8px; flex: 1; overflow: hidden; }
+  .iphone-page-title { font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 800; color: #fff; letter-spacing: -0.5px; margin-bottom: 1px; }
+  .iphone-page-sub { font-size: 7px; color: #333; margin-bottom: 8px; }
+  .iphone-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-bottom: 6px; }
+  .iphone-card { background: #0f0f0f; border: 1px solid #1a1a1a; border-radius: 6px; padding: 5px; }
+  .iphone-card-label { font-size: 6px; color: #333; margin-bottom: 2px; }
+  .iphone-card-value { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 800; color: #fff; }
+  .iphone-cards-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 8px; }
+  .iphone-card2 { background: #0f0f0f; border: 1px solid #1a1a1a; border-radius: 6px; padding: 5px; }
+  .iphone-card2-label { font-size: 6px; color: #333; margin-bottom: 2px; }
+  .iphone-card2-value { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 700; color: #fff; }
+  .iphone-section-title { font-size: 8px; font-weight: 700; color: #888; letter-spacing: 0.5px; margin-bottom: 5px; }
+  .iphone-shortcut { display: flex; align-items: center; justify-content: space-between; padding: 5px 8px; background: #0f0f0f; border: 1px solid #1a1a1a; border-radius: 6px; margin-bottom: 3px; }
+  .iphone-shortcut-text { font-size: 7.5px; color: #555; }
+  .iphone-shortcut-arrow { color: var(--green); font-size: 8px; }
+  .iphone-tabbar { display: flex; justify-content: space-around; padding: 6px 4px 10px; border-top: 1px solid #111; margin-top: auto; }
+  .iphone-tab { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .iphone-tab-icon { font-size: 12px; }
+  .iphone-tab-label { font-size: 5.5px; color: #333; }
+  .iphone-tab.active .iphone-tab-label { color: var(--green); }
+  .iphone-tab.active .iphone-tab-icon { filter: hue-rotate(0deg); }
+
+  /* Glow abaixo dos devices */
+  .preview-glow { position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%); width: 600px; height: 200px; background: radial-gradient(ellipse, rgba(34,197,94,0.08) 0%, transparent 70%); pointer-events: none; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .preview-devices { flex-direction: column; align-items: center; }
+    .iphone-wrap { margin-left: 0; margin-top: -20px; }
+    .app-cards-row { grid-template-columns: repeat(3, 1fr); }
+    .app-cards-row .app-metric:nth-child(4), .app-cards-row .app-metric:nth-child(5) { display: none; }
+  }
+
   /* FOOTER */
   footer { border-top: 1px solid var(--border); padding: 40px 5%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
   .footer-logo { font-family: 'Outfit', sans-serif; font-size: 20px; letter-spacing: -0.5px; }
@@ -249,6 +333,169 @@
     <div class="hero-stat"><div class="hero-stat-value">4.9★</div><div class="hero-stat-label">Avaliação média</div></div>
     <div class="hero-stat-divider"></div>
     <div class="hero-stat"><div class="hero-stat-value">Zero</div><div class="hero-stat-label">Planilhas</div></div>
+  </div>
+</section>
+
+<!-- PREVIEW DE PRODUTO -->
+<section class="preview-section">
+  <div class="section-eyebrow">O produto</div>
+  <h2 class="section-heading">Interface pensada para o <span>dia a dia</span></h2>
+  <p class="section-desc">Rápido, limpo e funciona no celular e no computador — sem instalar nada.</p>
+
+  <div class="preview-devices">
+    <!-- MacBook -->
+    <div class="macbook-wrap">
+      <div class="macbook">
+        <div class="macbook-lid">
+          <div class="macbook-screen-area">
+            <div class="app-frame">
+              <!-- Sidebar -->
+              <div class="app-sidebar">
+                <div class="app-sidebar-logo">Nutri<span>X</span></div>
+                <div class="app-nav-item active">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                  Dashboard
+                </div>
+                <div class="app-nav-item">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  Pipeline
+                </div>
+                <div class="app-nav-item">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                  Pacientes
+                </div>
+                <div class="app-nav-item">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                  Inativos
+                </div>
+                <div class="app-nav-item">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  Agendamentos
+                </div>
+                <div class="app-nav-item">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  Financeiro
+                </div>
+                <div class="app-nav-item">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  Inbox
+                </div>
+                <div class="app-nav-item">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+                  Pós Consulta
+                </div>
+              </div>
+              <!-- Main -->
+              <div class="app-main">
+                <div class="app-main-title">Dashboard</div>
+                <div class="app-main-sub">Resumo do seu consultório</div>
+                <div class="app-cards-row">
+                  <div class="app-metric"><div class="app-metric-label">Consultas Hoje</div><div class="app-metric-value">4</div></div>
+                  <div class="app-metric"><div class="app-metric-label">Pacientes Ativos</div><div class="app-metric-value">38</div></div>
+                  <div class="app-metric"><div class="app-metric-label">Inadimplentes</div><div class="app-metric-value" style="color:#ef4444">3</div></div>
+                  <div class="app-metric"><div class="app-metric-label">Receita do Mês</div><div class="app-metric-value green" style="font-size:11px">R$4.820</div></div>
+                  <div class="app-metric"><div class="app-metric-label">Concluídas/Mês</div><div class="app-metric-value">21</div></div>
+                </div>
+                <div class="app-bottom-row">
+                  <div class="app-panel">
+                    <div class="app-panel-title">Atalhos Rápidos</div>
+                    <div class="app-shortcut"><span class="app-shortcut-text">Novo Paciente</span><span class="app-shortcut-arrow">→</span></div>
+                    <div class="app-shortcut"><span class="app-shortcut-text">Novo Agendamento</span><span class="app-shortcut-arrow">→</span></div>
+                    <div class="app-shortcut"><span class="app-shortcut-text">Registrar Pagamento</span><span class="app-shortcut-arrow">→</span></div>
+                    <div class="app-shortcut"><span class="app-shortcut-text">Follow-up Inativos</span><span class="app-shortcut-arrow">→</span></div>
+                  </div>
+                  <div class="app-panel">
+                    <div class="app-panel-title" style="display:flex;justify-content:space-between"><span>Consultas de Hoje</span><span style="color:var(--green);font-size:8px;cursor:default">Ver todas</span></div>
+                    <div class="app-shortcut"><span class="app-shortcut-text" style="color:#fff">Maria Santos</span><span style="font-size:8px;color:#22c55e">09:00</span></div>
+                    <div class="app-shortcut"><span class="app-shortcut-text" style="color:#fff">Ana Lima</span><span style="font-size:8px;color:#22c55e">11:00</span></div>
+                    <div class="app-shortcut"><span class="app-shortcut-text" style="color:#fff">Carla Souza</span><span style="font-size:8px;color:#22c55e">14:30</span></div>
+                    <div class="app-shortcut"><span class="app-shortcut-text" style="color:#fff">Julia Melo</span><span style="font-size:8px;color:#22c55e">16:00</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="macbook-base"><div class="macbook-notch"></div></div>
+        <div class="macbook-foot"></div>
+      </div>
+    </div>
+
+    <!-- iPhone -->
+    <div class="iphone-wrap">
+      <div class="iphone">
+        <div class="iphone-outer">
+          <div class="iphone-screen-area">
+            <div class="iphone-island"></div>
+            <div class="iphone-app">
+              <div class="iphone-status">
+                <span>9:41</span>
+                <span>▐▌ ▾ 🔋</span>
+              </div>
+              <div class="iphone-header">
+                <div class="iphone-logo">Nutri<span>X</span></div>
+                <div style="color:var(--green);font-size:11px">🔔</div>
+              </div>
+              <div class="iphone-content">
+                <div class="iphone-page-title">Dashboard</div>
+                <div class="iphone-page-sub">Resumo do seu consultório</div>
+                <div class="iphone-cards-grid">
+                  <div class="iphone-card"><div class="iphone-card-label">Consultas Hoje</div><div class="iphone-card-value">4</div></div>
+                  <div class="iphone-card"><div class="iphone-card-label">Pacientes Ativos</div><div class="iphone-card-value">38</div></div>
+                  <div class="iphone-card"><div class="iphone-card-label">Inativos</div><div class="iphone-card-value" style="color:#f59e0b">7</div></div>
+                </div>
+                <div class="iphone-cards-row2">
+                  <div class="iphone-card2"><div class="iphone-card2-label">Receita do Mês</div><div class="iphone-card2-value" style="color:var(--green);font-size:9px">R$4.820</div></div>
+                  <div class="iphone-card2"><div class="iphone-card2-label">Concluídas</div><div class="iphone-card2-value">21</div></div>
+                </div>
+                <div class="iphone-section-title">Atalhos Rápidos</div>
+                <div class="iphone-shortcut"><span class="iphone-shortcut-text">Novo Paciente</span><span class="iphone-shortcut-arrow">→</span></div>
+                <div class="iphone-shortcut"><span class="iphone-shortcut-text">Novo Agendamento</span><span class="iphone-shortcut-arrow">→</span></div>
+                <div class="iphone-shortcut"><span class="iphone-shortcut-text">Registrar Pagamento</span><span class="iphone-shortcut-arrow">→</span></div>
+                <div class="iphone-shortcut"><span class="iphone-shortcut-text">Follow-up Inativos</span><span class="iphone-shortcut-arrow">→</span></div>
+              </div>
+              <div class="iphone-tabbar">
+                <div class="iphone-tab active">
+                  <div class="iphone-tab-icon">⊞</div>
+                  <div class="iphone-tab-label" style="color:var(--green)">Dashboard</div>
+                </div>
+                <div class="iphone-tab">
+                  <div class="iphone-tab-icon" style="color:#333">▐▌</div>
+                  <div class="iphone-tab-label">Pipeline</div>
+                </div>
+                <div class="iphone-tab">
+                  <div class="iphone-tab-icon" style="color:#333">👤</div>
+                  <div class="iphone-tab-label">Pacientes</div>
+                </div>
+                <div class="iphone-tab">
+                  <div class="iphone-tab-icon" style="color:#333">📅</div>
+                  <div class="iphone-tab-label">Agenda</div>
+                </div>
+                <div class="iphone-tab">
+                  <div class="iphone-tab-icon" style="color:#333">···</div>
+                  <div class="iphone-tab-label">Mais</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-glow"></div>
+  </div>
+
+  <!-- Features rápidas abaixo dos devices -->
+  <div style="display:flex;justify-content:center;gap:32px;margin-top:52px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#555;">
+      <span style="color:var(--green)">✓</span> Funciona no celular e computador
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#555;">
+      <span style="color:var(--green)">✓</span> Sem instalar nada — acessa pelo navegador
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#555;">
+      <span style="color:var(--green)">✓</span> Configure em menos de 5 minutos
+    </div>
   </div>
 </section>
 
