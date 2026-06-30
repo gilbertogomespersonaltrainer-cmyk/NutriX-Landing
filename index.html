@@ -56,9 +56,10 @@ nav {
 @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
 
 .hero {
-  min-height: 100vh; display: flex; flex-direction: column; align-items: center;
-  justify-content: center; text-align: center;
-  padding: 120px 5% 80px; position: relative; overflow: hidden;
+  min-height: 100vh;
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center; gap: 0;
+  padding: 100px 6% 0; position: relative; overflow: hidden;
 }
 
 /* Grid lines background */
@@ -66,20 +67,29 @@ nav {
   content: '';
   position: absolute; inset: 0; z-index: 0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
   background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 100%);
+  mask-image: radial-gradient(ellipse 100% 80% at 30% 0%, black 0%, transparent 100%);
 }
-/* Green glow */
+/* Green glow — deslocado para a direita com o mockup */
 .hero::after {
   content: '';
-  position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
-  width: 800px; height: 600px; z-index: 0;
-  background: radial-gradient(ellipse, rgba(34,197,94,0.09) 0%, transparent 65%);
+  position: absolute; top: 0; right: -100px;
+  width: 700px; height: 700px; z-index: 0;
+  background: radial-gradient(ellipse, rgba(34,197,94,0.07) 0%, transparent 65%);
   pointer-events: none;
 }
-.hero > * { position: relative; z-index: 1; }
+
+/* Coluna de texto (esquerda) */
+.hero-content { position: relative; z-index: 1; padding-right: 40px; padding-bottom: 80px; }
+
+/* Coluna de imagem (direita) */
+.hero-visual {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: flex-end;
+  align-self: flex-end; /* gruda no fundo do hero */
+}
 
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
@@ -94,28 +104,28 @@ nav {
 
 .hero-title {
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(48px, 7vw, 92px);
-  font-weight: 900; letter-spacing: -4px; line-height: .97;
-  margin-bottom: 24px;
+  font-size: clamp(44px, 5.5vw, 80px);
+  font-weight: 900; letter-spacing: -3.5px; line-height: .97;
+  margin-bottom: 24px; text-align: left;
   animation: fadeUp .5s ease .08s both;
 }
 .hero-title .green { color: var(--green); }
 .hero-title .dim { color: #27272a; font-weight: 800; display: block; }
 
 .hero-sub {
-  font-size: clamp(15px, 1.8vw, 17px); color: #52525b; max-width: 480px;
-  margin: 0 auto 36px; font-weight: 400; line-height: 1.75;
+  font-size: clamp(14px, 1.4vw, 16px); color: #52525b; max-width: 400px;
+  margin: 0 0 36px; font-weight: 400; line-height: 1.8; text-align: left;
   animation: fadeUp .5s ease .16s both;
 }
 .hero-sub em { color: #a1a1aa; font-style: normal; font-weight: 500; }
 
 .hero-actions {
-  display: flex; align-items: center; gap: 12px; justify-content: center;
-  margin-bottom: 20px; flex-wrap: wrap;
+  display: flex; align-items: center; gap: 12px; justify-content: flex-start;
+  margin-bottom: 16px; flex-wrap: wrap;
   animation: fadeUp .5s ease .24s both;
 }
 .btn-primary {
-  display: inline-flex; align-items: center; gap-6px;
+  display: inline-flex; align-items: center;
   background: var(--green); color: #052e16;
   font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
   padding: 13px 28px; border-radius: 10px; border: none; cursor: pointer;
@@ -132,66 +142,64 @@ nav {
 .btn-ghost:hover { color: #a1a1aa; border-color: rgba(255,255,255,.15); }
 .btn-ghost svg { opacity: .6; }
 
-.hero-note { font-size: 12px; color: #3f3f46; margin-bottom: 72px; animation: fadeUp .5s ease .32s both; }
+.hero-note { font-size: 12px; color: #3f3f46; margin-bottom: 48px; animation: fadeUp .5s ease .32s both; text-align: left; }
 
 /* Stats row */
 .hero-stats {
-  display: flex; align-items: center; gap: 0; justify-content: center;
+  display: flex; align-items: stretch; gap: 0;
   animation: fadeUp .5s ease .4s both;
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: 14px; overflow: hidden;
+  border-radius: 14px; overflow: hidden; width: fit-content;
 }
-.hero-stat { padding: 16px 32px; text-align: center; border-right: 1px solid var(--border); }
+.hero-stat { padding: 14px 24px; text-align: center; border-right: 1px solid var(--border); }
 .hero-stat:last-child { border-right: none; }
-.hero-stat-value { font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 800; color: var(--green); letter-spacing: -1px; }
-.hero-stat-label { font-size: 11px; color: var(--muted); margin-top: 1px; letter-spacing: .02em; }
+.hero-stat-value { font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 800; color: var(--green); letter-spacing: -1px; }
+.hero-stat-label { font-size: 10px; color: var(--muted); margin-top: 1px; letter-spacing: .02em; }
 
-/* ─── MOCKUP SECTION ─── */
+/* MacBook no hero */
+.hero-macbook {
+  width: min(640px, 50vw);
+  filter: drop-shadow(0 -20px 80px rgba(34,197,94,0.06)) drop-shadow(0 40px 60px rgba(0,0,0,.7));
+  animation: fadeUp .6s ease .2s both;
+}
+
+/* ─── MOCKUP SECTION (só iPhone) ─── */
 .mockup-section {
-  padding: 80px 5% 100px; display: flex; align-items: center; justify-content: center;
-  gap: 0; position: relative; overflow: visible;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 6% 80px; position: relative; gap: 60px;
+  flex-wrap: wrap;
 }
 .mockup-section::before {
   content: '';
-  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-  width: 900px; height: 300px;
-  background: radial-gradient(ellipse, rgba(34,197,94,0.05) 0%, transparent 70%);
+  position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+  width: 900px; height: 400px;
+  background: radial-gradient(ellipse, rgba(34,197,94,0.04) 0%, transparent 70%);
   pointer-events: none;
 }
 
-/* Desktop mockup image */
-.mockup-desktop-wrap {
-  position: relative; z-index: 1;
-  filter: drop-shadow(0 40px 80px rgba(0,0,0,.85)) drop-shadow(0 0 1px rgba(255,255,255,.04));
-}
-.mockup-desktop-wrap img {
-  width: min(780px, 80vw);
-  display: block; border-radius: 16px;
-}
-
-/* Mobile mockup image */
-.mockup-mobile-wrap {
-  position: relative; z-index: 2;
-  margin-left: -60px; margin-bottom: -20px; align-self: flex-end;
-  filter: drop-shadow(0 30px 60px rgba(0,0,0,.9)) drop-shadow(0 0 1px rgba(255,255,255,.04));
-}
-.mockup-mobile-wrap img {
-  width: min(190px, 22vw);
-  display: block; border-radius: 32px;
-}
-
-/* Availability pills */
-.mockup-caption {
-  position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
-  display: flex; gap: 12px; z-index: 10; white-space: nowrap;
+/* Pills */
+.mockup-pills {
+  display: flex; flex-direction: column; gap: 10px;
+  animation: fadeUp .5s ease .3s both;
 }
 .cap-pill {
-  display: flex; align-items: center; gap: 6px;
+  display: flex; align-items: center; gap: 8px;
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: 100px; padding: 6px 14px;
-  font-size: 12px; color: #52525b; font-weight: 500;
+  border-radius: 100px; padding: 8px 16px;
+  font-size: 12px; color: #52525b; font-weight: 500; white-space: nowrap;
 }
 .cap-pill span { color: var(--green); }
+
+/* iPhone flutuando */
+.mockup-mobile-wrap {
+  position: relative; z-index: 2;
+  filter: drop-shadow(0 30px 60px rgba(0,0,0,.9));
+  animation: fadeUp .5s ease .1s both;
+}
+.mockup-mobile-wrap img {
+  width: min(210px, 28vw);
+  display: block;
+}
 
 /* ─── LOGO STRIP ─── */
 .strip { padding: 40px 5%; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -443,6 +451,18 @@ footer {
 .footer-link:hover { color: #52525b; }
 
 /* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; padding-bottom: 0; }
+  .hero-content { padding-right: 0; padding-bottom: 48px; text-align: center; }
+  .hero-title { text-align: center; }
+  .hero-sub { margin: 0 auto 36px; text-align: center; }
+  .hero-actions { justify-content: center; }
+  .hero-note { text-align: center; }
+  .hero-stats { margin: 0 auto; }
+  .hero-visual { display: none; }
+  .mockup-section { flex-direction: column; align-items: center; gap: 32px; padding-bottom: 60px; }
+  .mockup-mobile-wrap img { width: min(200px, 50vw); }
+}
 @media (max-width: 900px) {
   .nav-links { display: none; }
   .pain-grid { grid-template-columns: 1fr 1fr; }
@@ -451,17 +471,13 @@ footer {
   .wa-inner { grid-template-columns: 1fr; gap: 48px; }
   .pricing-grid { grid-template-columns: 1fr; }
   .testimonials-grid { grid-template-columns: 1fr; }
-  .mockup-section { flex-direction: column; align-items: center; }
-  .mockup-mobile-wrap { margin-left: 0; margin-top: -30px; }
-  .mockup-desktop-wrap img { width: min(600px, 90vw); }
-  .mockup-mobile-wrap img { width: min(160px, 35vw); }
 }
 @media (max-width: 600px) {
   .pain-grid { grid-template-columns: 1fr; }
   .bento { grid-template-columns: 1fr; }
   .bento-card.wide { grid-column: span 1; }
-  .hero-stats { flex-direction: column; border-radius: 12px; }
-  .hero-stat { border-right: none; border-bottom: 1px solid var(--border); width: 100%; }
+  .hero-stats { flex-direction: column; border-radius: 12px; width: 100%; }
+  .hero-stat { border-right: none; border-bottom: 1px solid var(--border); }
   .hero-stat:last-child { border-bottom: none; }
 }
 </style>
@@ -484,48 +500,53 @@ footer {
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-eyebrow">
-    <div class="hero-eyebrow-dot"></div>
-    O CRM que faltava para nutricionistas
+  <!-- Coluna esquerda: texto -->
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-dot"></div>
+      O CRM que faltava para nutricionistas
+    </div>
+    <h1 class="hero-title">
+      Seu consultório<br>
+      <span class="green">organizado.</span>
+      <span class="dim">De verdade.</span>
+    </h1>
+    <p class="hero-sub">
+      Financeiro, agenda, WhatsApp automático e follow-up de inativos —
+      <em>tudo que os outros softwares ignoram</em>, em um só lugar.
+    </p>
+    <div class="hero-actions">
+      <a href="https://pay.hotmart.com/H105769412F?off=6rficksd" target="_blank" class="btn-primary">
+        Começar grátis — 7 dias
+      </a>
+      <a href="https://crm-nutri-x.vercel.app/demo" target="_blank" class="btn-ghost">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Ver demo ao vivo
+      </a>
+    </div>
+    <p class="hero-note">Sem cartão de crédito · Cancele quando quiser</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-value">+500</div><div class="hero-stat-label">Nutricionistas</div></div>
+      <div class="hero-stat"><div class="hero-stat-value">4.9★</div><div class="hero-stat-label">Avaliação</div></div>
+      <div class="hero-stat"><div class="hero-stat-value">Zero</div><div class="hero-stat-label">Planilhas</div></div>
+    </div>
   </div>
-  <h1 class="hero-title">
-    Seu consultório<br>
-    <span class="green">organizado.</span>
-    <span class="dim">De verdade.</span>
-  </h1>
-  <p class="hero-sub">
-    Financeiro, agenda, WhatsApp automático e follow-up de inativos —
-    <em>tudo que os outros softwares ignoram</em>, em um só lugar.
-  </p>
-  <div class="hero-actions">
-    <a href="https://pay.hotmart.com/H105769412F?off=6rficksd" target="_blank" class="btn-primary">
-      Começar grátis — 7 dias
-    </a>
-    <a href="https://crm-nutri-x.vercel.app/demo" target="_blank" class="btn-ghost">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-      Ver demo ao vivo
-    </a>
-  </div>
-  <p class="hero-note">Sem cartão de crédito · Cancele quando quiser</p>
-  <div class="hero-stats">
-    <div class="hero-stat"><div class="hero-stat-value">+500</div><div class="hero-stat-label">Nutricionistas</div></div>
-    <div class="hero-stat"><div class="hero-stat-value">4.9★</div><div class="hero-stat-label">Avaliação</div></div>
-    <div class="hero-stat"><div class="hero-stat-value">Zero</div><div class="hero-stat-label">Planilhas</div></div>
+
+  <!-- Coluna direita: MacBook encostado na base do hero -->
+  <div class="hero-visual">
+    <img class="hero-macbook" src="./Mockup-desktop.png" alt="NutriX no computador" />
   </div>
 </section>
 
-<!-- MOCKUP -->
+<!-- MOCKUP — só iPhone + pills -->
 <section class="mockup-section">
-  <div class="mockup-desktop-wrap">
-    <img src="./Mockup-desktop.png" alt="NutriX no computador" />
+  <div class="mockup-pills">
+    <div class="cap-pill"><span>✓</span> Funciona no celular e no computador</div>
+    <div class="cap-pill"><span>✓</span> Sem instalar nada — acessa pelo navegador</div>
+    <div class="cap-pill"><span>✓</span> Configure em menos de 5 minutos</div>
   </div>
   <div class="mockup-mobile-wrap">
     <img src="./Mockup-mobile.png" alt="NutriX no celular" />
-  </div>
-  <div class="mockup-caption">
-    <div class="cap-pill"><span>✓</span> Funciona no celular</div>
-    <div class="cap-pill"><span>✓</span> Funciona no computador</div>
-    <div class="cap-pill"><span>✓</span> Sem instalar nada</div>
   </div>
 </section>
 
